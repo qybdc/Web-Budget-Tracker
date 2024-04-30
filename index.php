@@ -10,14 +10,106 @@ if (mysqli_connect_errno()) {
     exit('Failed to connect to MySQL: ' . mysqli_connect_error());
 }
 
-$firstDayOfMonth = date('Y-m-01'); // First day of the current month
-$lastDayOfMonth = date('Y-m-t'); // Last day of the current month
+$firstDayOfMonth = date('Y-m-01');
+$lastDayOfMonth = date('Y-m-t'); 
 
 $sql = "SELECT * FROM `budget` WHERE `transDate` BETWEEN '$firstDayOfMonth' AND '$lastDayOfMonth' ORDER BY `transDate`";
 
 $stmt = mysqli_prepare($link, $sql);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
+
+$BudgetTotal = 0;
+$HousingTotal = 0;
+$UtilitiesTotal = 0;
+$FoodTotal = 0;
+$TransTotal = 0;
+$HealthTotal = 0;
+$DebtReTotal = 0;
+$SavingsTotal = 0;
+$PersonalTotal = 0;
+$OtherTotal = 0;
+
+while ($row = mysqli_fetch_assoc($result)) {
+    $Category = $row['Category'];
+    $Amount = $row['Amount'];
+    $transDate = $row['transDate'];
+    $Desc = $row['Description'];
+    $Type = $row['Type'];
+    $paymentMethod = $row['paymentMethod'];
+
+    if ($Type == "Expense") {
+        $BudgetTotal += $Amount;
+    } else {
+        $BudgetTotal -= $Amount;
+    }
+
+    if ($Category == "Housing") {
+        if ($Type == "Expense") {
+            $HousingTotal += $Amount;
+        } else {
+            $HousingTotal -= $Amount;
+        }
+        
+    } elseif ($Category == "Utilities") {
+        if ($Type == "Expense") {
+            $UtilitiesTotal += $Amount;
+        } else {
+            $UtilitiesTotal -= $Amount;
+        }
+        
+    } elseif ($Category == "Food") {
+        if ($Type == "Expense") {
+            $FoodTotal += $Amount;
+        } else {
+            $FoodTotal -= $Amount;
+        }
+        
+    } elseif ($Category == "Transportation") {
+        if ($Type == "Expense") {
+            $TransTotal += $Amount;
+        } else {
+            $TransTotal -= $Amount;
+        }
+        
+    } elseif ($Category == "Healthcare") {
+        if ($Type == "Expense") {
+            $HealthTotal += $Amount;
+        } else {
+            $HealthTotal -= $Amount;
+        }
+        
+    } elseif ($Category == "Debt Repayment") {
+        if ($Type == "Expense") {
+            $DebtReTotal += $Amount;
+        } else {
+            $DebtReTotal -= $Amount;
+        }
+        
+    } elseif ($Category == "Savings") {
+        if ($Type == "Expense") {
+            $SavingsTotal += $Amount;
+        } else {
+            $SavingsTotalTotal -= $Amount;
+        }
+        
+    } elseif ($Category == "Personal") {
+        if ($Type == "Expense") {
+            $PersonalTotal += $Amount;
+        } else {
+            $PersonalTotal -= $Amount;
+        }
+        
+    } elseif ($Category == "Other") {
+        if ($Type == "Expense") {
+            $OtherTotal += $Amount;
+        } else {
+            $OtherTotal -= $Amount;
+        }
+        
+    }
+
+}
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -36,9 +128,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mysqli_stmt_execute($stmt);
 
     mysqli_stmt_close($stmt);
-
-    
+    header("Location: index.php");
 }
+
 ?>
 
 
@@ -55,58 +147,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <h1>Budget Tracker: "Current Month"</h1>
     <h2>Budget</h2>
-    <h2>Total Usage</h2>
+    <h2>$<?=$BudgetTotal?></h2>
 
     <div class="categoryBudget">
         <div class="categoryItem">
             <h3>Housing</h3>
             <p>$1000</p>
-            <p>$400</p>
+            <p>$<?= $HousingTotal?></p>
         </div>
         <div class="categoryItem">
             <h3>Utilities</h3>
             <p>$1000</p>
-            <p>$400</p>
+            <p>$<?= $UtilitiesTotal?></p>
         </div>
         <div class="categoryItem">
             <h3>Food</h3>
             <p>$1000</p>
-            <p>$400</p>
+            <p>$<?= $FoodTotal?></p>
         </div>
         <div class="categoryItem">
             <h3>Transportation</h3>
             <p>$1000</p>
-            <p>$400</p>
+            <p>$<?=$TransTotal?></p>
         </div>
         <div class="categoryItem">
             <h3>Healthcare</h3>
             <p>$1000</p>
-            <p>$400</p>
+            <p>$<?=$HealthTotal?></p>
         </div>
         <div class="categoryItem">
             <h3>Debt Repayment</h3>
             <p>$1000</p>
-            <p>$400</p>
+            <p>$<?=$DebtReTotal?></p>
         </div>
         <div class="categoryItem">
             <h3>Savings</h3>
             <p>$1000</p>
-            <p>$400</p>
+            <p>$<?=$SavingsTotal?></p>
         </div>
         <div class="categoryItem">
             <h3>Personal</h3>
             <p>$1000</p>
-            <p>$400</p>
+            <p>$<?$PersonalTotal?></p>
         </div>
         <div class="categoryItem">
             <h3>Other</h3>
             <p>$1000</p>
-            <p>$400</p>
+            <p>$<?=$OtherTotal?></p>
         </div>
     </div>
 
     <h3>Add transactions</h3>
-    <form action="index.php" method="post">
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         <div class="formItem">
             <label>Category:</label>
             <select name="category" id="category" required>
@@ -189,32 +281,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "</div>";
         }
         ?>
-        <div class="transactionItem">
-            <p>Housing</p>
-            <p>$100.69</p>
-            <p>04/30/2024</p>
-            <p>This is a sample transaction</p>
-            <p>Expense</p>
-            <p>Credit</p>
-        </div>
-
-        <div class="transactionItem">
-            <p>Housing</p>
-            <p>$100.69</p>
-            <p>04/30/2024</p>
-            <p>This is a sample transaction</p>
-            <p>Expense</p>
-            <p>Credit</p>
-        </div>
-
-        <div class="transactionItem">
-            <p>Housing</p>
-            <p>$100.69</p>
-            <p>04/30/2024</p>
-            <p>This is a sample transaction</p>
-            <p>Expense</p>
-            <p>Credit</p>
-        </div>
     </div>
 
 </body>
