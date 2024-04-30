@@ -1,3 +1,47 @@
+<?php
+$DATABASE_HOST = 'localhost';
+$DATABASE_USER = 'root';
+$DATABASE_PASS = '';
+$DATABASE_NAME = "budgettracker";
+
+
+$link = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
+if (mysqli_connect_errno()) {
+    exit('Failed to connect to MySQL: ' . mysqli_connect_error());
+}
+
+$firstDayOfMonth = date('Y-m-01'); // First day of the current month
+$lastDayOfMonth = date('Y-m-t'); // Last day of the current month
+
+$sql = "SELECT * FROM `budget` WHERE `transDate` BETWEEN '$firstDayOfMonth' AND '$lastDayOfMonth' ORDER BY `transDate`";
+
+$stmt = mysqli_prepare($link, $sql);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $query = "INSERT INTO budget (Category, Amount, transDate, Description, Type, paymentMethod) VALUES (?, ?, ?, ?, ?, ?)";
+    if ($stmt = mysqli_prepare($link, $query)) {
+        mysqli_stmt_bind_param($stmt, 'sdssss', $param_Category, $param_Amount, $param_transDate, $param_Desc, $param_Type, $param_paymentMethod);
+    }
+
+    $param_Category = $_POST["category"];
+    $param_Amount = $_POST["amount"];
+    $param_transDate = $_POST["transDate"];
+    $param_Desc = $_POST["description"];
+    $param_Type = $_POST["type"];
+    $param_paymentMethod = $_POST["paymentMethod"];
+
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+
+    
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -127,6 +171,24 @@
             <h3>Payment Method</h3>
         </div>
 
+        <?php
+        while ($row = mysqli_fetch_assoc($result)) {
+            $Category = $row['Category'];
+            $Amount = $row['Amount'];
+            $transDate = $row['transDate'];
+            $Desc = $row['Description'];
+            $Type = $row['Type'];
+            $paymentMethod = $row['paymentMethod'];
+            echo "<div class='transactionItem'>";
+            echo "<p>" . $Category . "</p>";
+            echo "<p>" . $Amount . "</p>";
+            echo "<p>" . $transDate . "</p>";
+            echo "<p>" . $Desc . "</p>";
+            echo "<p>" . $Type . "</p>";
+            echo "<p>" . $paymentMethod . "</p>";
+            echo "</div>";
+        }
+        ?>
         <div class="transactionItem">
             <p>Housing</p>
             <p>$100.69</p>
