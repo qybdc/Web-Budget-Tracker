@@ -1,0 +1,40 @@
+body {
+    text-align: center;
+}
+
+
+.categoryBudget {
+    display: flex;
+    justify-content: space-around;
+}
+
+.categoryItem {
+    width: 200px;
+    border: 1px solid blue;
+    text-align: center;
+}
+
+form {
+    border: 5px solid red;
+    display: flex;
+    justify-content: space-around;
+}
+
+.transactionContainer {
+    margin-bottom: 5px;
+
+}
+
+.transactionItem {
+    display: flex;
+    justify-content: space-around;
+    border: 2px solid purple;
+}
+
+.transactionItem p {
+    width: 200px;
+}
+
+.transactionItem h3 {
+    width: 200px;
+}
