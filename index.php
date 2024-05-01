@@ -39,6 +39,7 @@ $result = mysqli_stmt_get_result($stmt);
 
 
 $BudgetTotal = $HousingTotal = $UtilitiesTotal = $FoodTotal = $TransTotal = $HealthTotal = $DebtReTotal = $SavingsTotal = $PersonalTotal = $OtherTotal = 0;
+$HousingTotal2 = $UtilitiesTotal2 = $FoodTotal2 = $TransTotal2 = $HealthTotal2 = $DebtReTotal2 = $SavingsTotal2 = $PersonalTotal2 = $OtherTotal2 = 0;
 while ($row = mysqli_fetch_assoc($result)) {
     $Category = $row['Category'];
     $Amount = $row['Amount'];
@@ -65,54 +66,63 @@ while ($row = mysqli_fetch_assoc($result)) {
     if ($Category == "Housing") {
         if ($Type == "Expense") {
             $HousingTotal += $Amount;
+            $HousingTotal2 += $Amount;
         } else {
             $HousingTotal -= $Amount;
         }
     } elseif ($Category == "Utilities") {
         if ($Type == "Expense") {
             $UtilitiesTotal += $Amount;
+            $UtilitiesTotal2 += $Amount;
         } else {
             $UtilitiesTotal -= $Amount;
         }
     } elseif ($Category == "Food") {
         if ($Type == "Expense") {
             $FoodTotal += $Amount;
+            $FoodTotal2 += $Amount;
         } else {
             $FoodTotal -= $Amount;
         }
     } elseif ($Category == "Transportation") {
         if ($Type == "Expense") {
             $TransTotal += $Amount;
+            $TransTotal2 += $Amount;
         } else {
             $TransTotal -= $Amount;
         }
     } elseif ($Category == "Healthcare") {
         if ($Type == "Expense") {
             $HealthTotal += $Amount;
+            $HealthTotal2 += $Amount;
         } else {
             $HealthTotal -= $Amount;
         }
     } elseif ($Category == "Debt Repayment") {
         if ($Type == "Expense") {
             $DebtReTotal += $Amount;
+            $DebtReTotal2 += $Amount;
         } else {
             $DebtReTotal -= $Amount;
         }
     } elseif ($Category == "Savings") {
         if ($Type == "Expense") {
             $SavingsTotal += $Amount;
+            $SavingsTotal2 += $Amount;
         } else {
             $SavingsTotal -= $Amount;
         }
     } elseif ($Category == "Personal") {
         if ($Type == "Expense") {
             $PersonalTotal += $Amount;
+            $PersonalTotal2 += $Amount;
         } else {
             $PersonalTotal -= $Amount;
         }
     } elseif ($Category == "Other") {
         if ($Type == "Expense") {
             $OtherTotal += $Amount;
+            $OtherTotal2 += $Amount;
         } else {
             $OtherTotal -= $Amount;
         }
@@ -150,6 +160,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Document</title>
 </head>
 
@@ -283,6 +294,66 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         <?php endforeach; ?>
     </div>
+    
+    
+    <div id="chart-container">
+        <canvas id="spendingChart"></canvas>
+    </div>
+
+    <script>
+        var ctx = document.getElementById('spendingChart').getContext('2d');
+        var spendingChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Housing', 'Utilities', 'Food', 'Transportation', 'Healthcare', 'Debt Repayment', 'Savings', 'Personal', 'Other'],
+                datasets: [{
+                    label: 'Spending by Category',
+                    data: [
+                        <?= $HousingTotal2 ?>,
+                        <?= $UtilitiesTotal2 ?>,
+                        <?= $FoodTotal2 ?>,
+                        <?= $TransTotal2 ?>,
+                        <?= $HealthTotal2 ?>,
+                        <?= $DebtReTotal2 ?>,
+                        <?= $SavingsTotal2 ?>,
+                        <?= $PersonalTotal2 ?>,
+                        <?= $OtherTotal2 ?>
+                    ],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(199, 199, 199, 0.2)',
+                        'rgba(83, 102, 255, 0.2)',
+                        'rgba(40, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(199, 199, 199, 1)',
+                        'rgba(83, 102, 255, 1)',
+                        'rgba(40, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                }
+            }
+        });
+    </script>
 
 </body>
 

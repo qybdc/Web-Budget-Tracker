@@ -38,3 +38,20 @@ form {
 .transactionItem h3 {
     width: 200px;
 }
+
+#chart-container {
+    width: 100%; 
+    max-width: 500px; 
+    height: 500px; 
+    margin: 20px auto; 
+    padding: 15px; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+    background-color: #f8f9fa; 
+    border-radius: 8px; 
+}
+
+#spendingChart {
+    width: 100%; 
+    height: auto; 
+    aspect-ratio: 1; 
+}
