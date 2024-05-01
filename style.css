@@ -10,14 +10,17 @@ body {
 
 .categoryItem {
     width: 200px;
-    border: 1px solid blue;
+    border: 1px solid black;
     text-align: center;
+    border-radius: 15px;
 }
 
 form {
-    border: 5px solid red;
+    border: 1px solid black;
     display: flex;
     justify-content: space-around;
+    border-radius: 15px;
+    padding: 3px;
 }
 
 .transactionContainer {
@@ -28,7 +31,9 @@ form {
 .transactionItem {
     display: flex;
     justify-content: space-around;
-    border: 2px solid purple;
+    margin: 3px;
+    border: 1px solid black;
+    border-radius: 15px;
 }
 
 .transactionItem p {

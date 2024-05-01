@@ -9,7 +9,7 @@ if (mysqli_connect_errno()) {
     exit('Failed to connect to MySQL: ' . mysqli_connect_error());
 }
 
-$sql = "SELECT * FROM userbudget"; // Removed the single quotes around the table name
+$sql = "SELECT * FROM userbudget"; 
 $stmt = mysqli_prepare($link, $sql);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
@@ -166,54 +166,54 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
     <h1>Budget Tracker: <?php echo date('F');?></h1>
-    <h2>Total Budget: $<?=$Total?></h2>
-    <h2>Total Spent: $<?= $BudgetTotal ?></h2>
+    <h2>Total Budget: $<?= number_format($Total, 2)?></h2>
+    <h2>Total Spent: $<?= number_format($BudgetTotal, 2) ?></h2>
 
     <div class="categoryBudget">
         <div class="categoryItem">
             <h3>Housing</h3>
-            <p>$<?= $Housing?></p>
-            <p>$<?= $HousingTotal ?></p>
+            <p>$<?= number_format($Housing, 2)?></p>
+            <p>$<?= number_format($HousingTotal, 2) ?></p>
         </div>
         <div class="categoryItem">
             <h3>Utilities</h3>
-            <p>$<?= $Utilities?></p>
-            <p>$<?= $UtilitiesTotal ?></p>
+            <p>$<?= number_format($Utilities, 2)?></p>
+            <p>$<?= number_format($UtilitiesTotal, 2) ?></p>
         </div>
         <div class="categoryItem">
             <h3>Food</h3>
-            <p>$<?=$Food?></p>
-            <p>$<?= $FoodTotal ?></p>
+            <p>$<?= number_format($Food, 2)?></p>
+            <p>$<?= number_format($FoodTotal, 2)?></p>
         </div>
         <div class="categoryItem">
             <h3>Transportation</h3>
-            <p>$<?=$Transportation?></p>
-            <p>$<?= $TransTotal ?></p>
+            <p>$<?= number_format($Transportation, 2)?></p>
+            <p>$<?= number_format($TransTotal, 2) ?></p>
         </div>
         <div class="categoryItem">
             <h3>Healthcare</h3>
-            <p>$<?=$Healthcare?></p>
-            <p>$<?= $HealthTotal ?></p>
+            <p>$<?= number_format($Healthcare, 2) ?></p>
+            <p>$<?= number_format($HealthTotal, 2) ?></p>
         </div>
         <div class="categoryItem">
             <h3>Debt Repayment</h3>
-            <p>$<?=$DebtRepay?></p>
-            <p>$<?= $DebtReTotal ?></p>
+            <p>$<?= number_format($DebtRepay, 2) ?></p>
+            <p>$<?= number_format($DebtReTotal, 2) ?></p>
         </div>
         <div class="categoryItem">
             <h3>Savings</h3>
-            <p>$<?=$Savings?></p>
-            <p>$<?= $SavingsTotal ?></p>
+            <p>$<?= number_format($Savings, 2) ?></p>
+            <p>$<?= number_format($SavingsTotal, 2) ?></p>
         </div>
         <div class="categoryItem">
             <h3>Personal</h3>
-            <p>$<?=$Personal?></p>
-            <p>$<?= $PersonalTotal ?></p>
+            <p>$<?= number_format($Personal, 2) ?></p>
+            <p>$<?= number_format($PersonalTotal, 2) ?></p>
         </div>
         <div class="categoryItem">
             <h3>Other</h3>
-            <p>$<?=$Other?></p>
-            <p>$<?= $OtherTotal ?></p>
+            <p>$<?= number_format($Other, 2) ?></p>
+            <p>$<?= number_format($OtherTotal, 2) ?></p>
         </div>
     </div>
 
@@ -286,7 +286,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php foreach ($transactions as $transaction) : ?>
             <div class='transactionItem'>
                 <p><?php echo $transaction['Category']; ?></p>
-                <p><?php echo $transaction['Amount']; ?></p>
+                <p><?php echo "$" . number_format($transaction['Amount'], 2); ?></p>
                 <p><?php echo $transaction['transDate']; ?></p>
                 <p><?php echo $transaction['Description']; ?></p>
                 <p><?php echo $transaction['Type']; ?></p>
@@ -311,8 +311,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     data: [
                         <?= $HousingTotal2 ?>,
                         <?= $UtilitiesTotal2 ?>,
-                        <?= $FoodTotal2 ?>,
-                        <?= $TransTotal2 ?>,
+                        <?= $FoodTotal ?>,
+                        <?= $TransTotal ?>,
                         <?= $HealthTotal2 ?>,
                         <?= $DebtReTotal2 ?>,
                         <?= $SavingsTotal2 ?>,
