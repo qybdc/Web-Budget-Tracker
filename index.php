@@ -9,7 +9,7 @@ if (mysqli_connect_errno()) {
     exit('Failed to connect to MySQL: ' . mysqli_connect_error());
 }
 
-$sql = "SELECT * FROM userbudget"; 
+$sql = "SELECT * FROM userbudget";
 $stmt = mysqli_prepare($link, $sql);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
@@ -170,14 +170,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <title>Document</title>
+    <script src="budgettracker.js"></script>
+    <title>Budget Tracker</title>
+
 </head>
 
 <body>
-    <h1>Budget Tracker: <?php echo date('F');?></h1>
+    <h1>Budget Tracker: <?php echo date('F'); ?></h1>
     <h2>Total Budget: $<span id="totalBudget"><?= number_format($Total, 2) ?></span></h2>
     <h2>Total Unspent: $<span id="totalSpent"><?= number_format($BudgetTotal * -1, 2) ?></span></h2>
-    <?php 
+    <?php
     $Needs = $Total * 0.50;
     $Wants = $Total * 0.30;
     $SavingsDebtRepayment = $Total * 0.20;
@@ -188,26 +190,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h3>Wants (30%): $<span id="wants"><?= number_format($Wants, 2) ?></span></h3>
         <h3>Savings/Debt Repayment (20%): $<span id="savingsDebt"><?= number_format($SavingsDebtRepayment, 2) ?></span></h3>
     </div>
-    
+
     <div class="categoryBudget">
         <div class="categoryItem">
             <h3>Housing</h3>
-            <p>$<?= number_format($Housing, 2)?></p>
+            <p>$<?= number_format($Housing, 2) ?></p>
             <p>$<?= number_format($HousingTotal, 2) ?></p>
         </div>
         <div class="categoryItem">
             <h3>Utilities</h3>
-            <p>$<?= number_format($Utilities, 2)?></p>
+            <p>$<?= number_format($Utilities, 2) ?></p>
             <p>$<?= number_format($UtilitiesTotal, 2) ?></p>
         </div>
         <div class="categoryItem">
             <h3>Food</h3>
-            <p>$<?= number_format($Food, 2)?></p>
-            <p>$<?= number_format($FoodTotal, 2)?></p>
+            <p>$<?= number_format($Food, 2) ?></p>
+            <p>$<?= number_format($FoodTotal, 2) ?></p>
         </div>
         <div class="categoryItem">
             <h3>Transportation</h3>
-            <p>$<?= number_format($Transportation, 2)?></p>
+            <p>$<?= number_format($Transportation, 2) ?></p>
             <p>$<?= number_format($TransTotal, 2) ?></p>
         </div>
         <div class="categoryItem">
@@ -314,8 +316,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         <?php endforeach; ?>
     </div>
-    
-    
+
+
     <div id="chart-container">
         <canvas id="spendingChart"></canvas>
     </div>
