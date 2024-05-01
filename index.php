@@ -69,6 +69,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             $HousingTotal2 += $Amount;
         } else {
             $HousingTotal -= $Amount;
+            $Total += $Amount;
         }
     } elseif ($Category == "Utilities") {
         if ($Type == "Expense") {
@@ -76,6 +77,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             $UtilitiesTotal2 += $Amount;
         } else {
             $UtilitiesTotal -= $Amount;
+            $Total += $Amount;
         }
     } elseif ($Category == "Food") {
         if ($Type == "Expense") {
@@ -83,6 +85,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             $FoodTotal2 += $Amount;
         } else {
             $FoodTotal -= $Amount;
+            $Total += $Amount;
         }
     } elseif ($Category == "Transportation") {
         if ($Type == "Expense") {
@@ -90,6 +93,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             $TransTotal2 += $Amount;
         } else {
             $TransTotal -= $Amount;
+            $Total += $Amount;
         }
     } elseif ($Category == "Healthcare") {
         if ($Type == "Expense") {
@@ -97,6 +101,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             $HealthTotal2 += $Amount;
         } else {
             $HealthTotal -= $Amount;
+            $Total += $Amount;
         }
     } elseif ($Category == "Debt Repayment") {
         if ($Type == "Expense") {
@@ -104,6 +109,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             $DebtReTotal2 += $Amount;
         } else {
             $DebtReTotal -= $Amount;
+            $Total += $Amount;
         }
     } elseif ($Category == "Savings") {
         if ($Type == "Expense") {
@@ -111,6 +117,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             $SavingsTotal2 += $Amount;
         } else {
             $SavingsTotal -= $Amount;
+            $Total += $Amount;
         }
     } elseif ($Category == "Personal") {
         if ($Type == "Expense") {
@@ -118,6 +125,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             $PersonalTotal2 += $Amount;
         } else {
             $PersonalTotal -= $Amount;
+            $Total += $Amount;
         }
     } elseif ($Category == "Other") {
         if ($Type == "Expense") {
@@ -125,6 +133,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             $OtherTotal2 += $Amount;
         } else {
             $OtherTotal -= $Amount;
+            $Total += $Amount;
         }
     }
 }
@@ -166,9 +175,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
     <h1>Budget Tracker: <?php echo date('F');?></h1>
-    <h2>Total Budget: $<?= number_format($Total, 2)?></h2>
-    <h2>Total Spent: $<?= number_format($BudgetTotal, 2) ?></h2>
+    <h2>Total Budget: $<span id="totalBudget"><?= number_format($Total, 2) ?></span></h2>
+    <h2>Total Unspent: $<span id="totalSpent"><?= number_format($BudgetTotal * -1, 2) ?></span></h2>
+    <?php 
+    $Needs = $Total * 0.50;
+    $Wants = $Total * 0.30;
+    $SavingsDebtRepayment = $Total * 0.20;
+    ?>
 
+    <div id="budgetBreakdown">
+        <h3>Needs (50%): $<span id="needs"><?= number_format($Needs, 2) ?></span></h3>
+        <h3>Wants (30%): $<span id="wants"><?= number_format($Wants, 2) ?></span></h3>
+        <h3>Savings/Debt Repayment (20%): $<span id="savingsDebt"><?= number_format($SavingsDebtRepayment, 2) ?></span></h3>
+    </div>
+    
     <div class="categoryBudget">
         <div class="categoryItem">
             <h3>Housing</h3>
