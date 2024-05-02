@@ -183,59 +183,71 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $Needs = $Total * 0.50;
     $Wants = $Total * 0.30;
     $SavingsDebtRepayment = $Total * 0.20;
+    $NeedsTotal = $HousingTotal + $UtilitiesTotal + $FoodTotal + $TransTotal + $HealthTotal;
+    $WantsTotal = $PersonalTotal + $OtherTotal;
+    $SavingsDebtRepaymentTotal = $DebtReTotal + $SavingsTotal;
     ?>
 
-    <div id="budgetBreakdown">
-        <h3>Needs (50%): $<span id="needs"><?= number_format($Needs, 2) ?></span></h3>
-        <h3>Wants (30%): $<span id="wants"><?= number_format($Wants, 2) ?></span></h3>
-        <h3>Savings/Debt Repayment (20%): $<span id="savingsDebt"><?= number_format($SavingsDebtRepayment, 2) ?></span></h3>
+    <div class="section" id="needsSection">
+        <h3 onclick="toggleVisibility('needs')">Needs (50%): <?= number_format($NeedsTotal, 2) ?>/$<?= number_format($Needs, 2) ?></h3>
+        <div class="categoryBudget" id="needs">
+            <div class="categoryItem" onclick="toggleVisibility(this)">
+                <h3>Housing</h3>
+                <p>$<?= number_format($Housing, 2) ?></p>
+                <p>$<?= number_format($HousingTotal, 2) ?></p>
+            </div>
+            <div class="categoryItem">
+                <h3>Utilities</h3>
+                <p>$<?= number_format($Utilities, 2) ?></p>
+                <p>$<?= number_format($UtilitiesTotal, 2) ?></p>
+            </div>
+            <div class="categoryItem">
+                <h3>Food</h3>
+                <p>$<?= number_format($Food, 2) ?></p>
+                <p>$<?= number_format($FoodTotal, 2) ?></p>
+            </div>
+            <div class="categoryItem">
+                <h3>Transportation</h3>
+                <p>$<?= number_format($Transportation, 2) ?></p>
+                <p>$<?= number_format($TransTotal, 2) ?></p>
+            </div>
+            <div class="categoryItem">
+                <h3>Healthcare</h3>
+                <p>$<?= number_format($Healthcare, 2) ?></p>
+                <p>$<?= number_format($HealthTotal, 2) ?></p>
+            </div>
+        </div>
     </div>
 
-    <div class="categoryBudget">
-        <div class="categoryItem">
-            <h3>Housing</h3>
-            <p>$<?= number_format($Housing, 2) ?></p>
-            <p>$<?= number_format($HousingTotal, 2) ?></p>
+    <div class="section" id="wantsSection">
+    <h3 onclick="toggleVisibility('wantsContainer')">Wants (30%): <?= number_format($WantsTotal, 2) ?>/<?= number_format($Wants, 2) ?></h3>
+        <div class="categoryBudget" id="wantsContainer">
+            <div class="categoryItem">
+                <h3>Personal</h3>
+                    <p>$<?= number_format($Personal, 2) ?></p>
+                    <p>$<?= number_format($PersonalTotal, 2) ?></p>
+            </div>
+            <div class="categoryItem">
+                <h3>Other</h3>
+                    <p>$<?= number_format($Other, 2) ?></p>
+                    <p>$<?= number_format($OtherTotal, 2) ?></p>
+            </div>
         </div>
-        <div class="categoryItem">
-            <h3>Utilities</h3>
-            <p>$<?= number_format($Utilities, 2) ?></p>
-            <p>$<?= number_format($UtilitiesTotal, 2) ?></p>
-        </div>
-        <div class="categoryItem">
-            <h3>Food</h3>
-            <p>$<?= number_format($Food, 2) ?></p>
-            <p>$<?= number_format($FoodTotal, 2) ?></p>
-        </div>
-        <div class="categoryItem">
-            <h3>Transportation</h3>
-            <p>$<?= number_format($Transportation, 2) ?></p>
-            <p>$<?= number_format($TransTotal, 2) ?></p>
-        </div>
-        <div class="categoryItem">
-            <h3>Healthcare</h3>
-            <p>$<?= number_format($Healthcare, 2) ?></p>
-            <p>$<?= number_format($HealthTotal, 2) ?></p>
-        </div>
-        <div class="categoryItem">
-            <h3>Debt Repayment</h3>
-            <p>$<?= number_format($DebtRepay, 2) ?></p>
-            <p>$<?= number_format($DebtReTotal, 2) ?></p>
-        </div>
-        <div class="categoryItem">
-            <h3>Savings</h3>
-            <p>$<?= number_format($Savings, 2) ?></p>
-            <p>$<?= number_format($SavingsTotal, 2) ?></p>
-        </div>
-        <div class="categoryItem">
-            <h3>Personal</h3>
-            <p>$<?= number_format($Personal, 2) ?></p>
-            <p>$<?= number_format($PersonalTotal, 2) ?></p>
-        </div>
-        <div class="categoryItem">
-            <h3>Other</h3>
-            <p>$<?= number_format($Other, 2) ?></p>
-            <p>$<?= number_format($OtherTotal, 2) ?></p>
+    </div>
+    <div class="section" id="savingsDebtSection">
+    <h3 onclick="toggleVisibility('savingsDebtContainer')">Savings/Debt Repayment (20%): <?= number_format($SavingsDebtRepaymentTotal, 2) ?>/<?= number_format($SavingsDebtRepayment, 2) ?></h3>
+        <div class="categoryBudget" id="savingsDebtContainer">
+            <div class="categoryItem">
+                <h3>Debt Repayment</h3>
+                    <p>$<?= number_format($DebtRepay, 2) ?></p>
+                    <p>$<?= number_format($DebtReTotal, 2) ?></p>
+            </div>
+            <div class="categoryItem">
+                <h3>Savings</h3>
+                    <p>$<?= number_format($Savings, 2) ?></p>
+                    <p>$<?= number_format($SavingsTotal, 2) ?></p>
+
+            </div>
         </div>
     </div>
 
@@ -376,6 +388,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         });
     </script>
+
+<script>
+function toggleVisibility(containerId) {
+    var container = document.getElementById(containerId);
+    if (container.style.display === 'none' || container.style.display === '') {
+        container.style.display = 'flex'; 
+        container.style.flexDirection = 'row'; 
+    } else {
+        container.style.display = 'none';
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    var containers = document.querySelectorAll('.categoryBudget');
+    containers.forEach(function(container) {
+        container.style.display = 'none';
+    });
+});
+</script>
 
 </body>
 

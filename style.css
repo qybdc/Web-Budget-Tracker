@@ -3,9 +3,25 @@ body {
 }
 
 
+.section h3 {
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+.section h3:hover {
+    text-decoration: underline;
+}
+
 .categoryBudget {
-    display: flex;
-    justify-content: space-around;
+    display: none;
+    flex-wrap: wrap;
+    justify-content: center; 
+    gap: 20px; 
+    margin-top: 10px;
+}
+
+.categoryItem {
+    flex: 0 1 200px; 
 }
 
 .categoryItem {
