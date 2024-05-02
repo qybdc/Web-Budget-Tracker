@@ -184,16 +184,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h2>$<span id="totalSpent"><?= number_format($BudgetTotal, 2) ?></span></h2>
     </div>
     <?php
-    $Needs = $Total * 0.50;
-    $Wants = $Total * 0.30;
-    $SavingsDebtRepayment = $Total * 0.20;
     $NeedsTotal = $HousingTotal + $UtilitiesTotal + $FoodTotal + $TransTotal + $HealthTotal;
     $WantsTotal = $PersonalTotal + $OtherTotal;
     $SavingsDebtRepaymentTotal = $DebtReTotal + $SavingsTotal;
+    $Needs = $Housing + $Utilities + $Food + $Transportation + $Healthcare;
+    $Wants = $Personal + $Other;
+    $SavingsDebtRepayment = $Savings + $DebtRepay;
     ?>
 
     <div class="section" id="needsSection">
-        <h3 onclick="toggleVisibility('needs')">Needs (50%): $<?= number_format($NeedsTotal, 2) ?>/$<?= number_format($Needs, 2) ?></h3>
+        <h3 onclick="toggleVisibility('needs')">Needs (<?= number_format(($Needs/$Total) * 100, 2) ?>%): $<?= number_format($NeedsTotal, 2) ?>/$<?= number_format($Needs, 2) ?></h3>
         <div class="categoryBudget" id="needs">
             <div class="categoryItem" onclick="toggleVisibility(this)">
                 <h3>Housing</h3>
@@ -224,7 +224,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <div class="section" id="wantsSection">
-        <h3 onclick="toggleVisibility('wantsContainer')">Wants (30%): $<?= number_format($WantsTotal, 2) ?>/$<?= number_format($Wants, 2) ?></h3>
+        <h3 onclick="toggleVisibility('wantsContainer')">Wants (<?= number_format(($Wants/$Total) * 100, 2) ?>%): $<?= number_format($WantsTotal, 2) ?>/$<?= number_format($Wants, 2) ?></h3>
         <div class="categoryBudget" id="wantsContainer">
             <div class="categoryItem">
                 <h3>Personal</h3>
@@ -239,7 +239,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
     <div class="section" id="savingsDebtSection">
-        <h3 onclick="toggleVisibility('savingsDebtContainer')">Savings/Debt Repayment (20%): $<?= number_format($SavingsDebtRepaymentTotal, 2) ?>/$<?= number_format($SavingsDebtRepayment, 2) ?></h3>
+        <h3 onclick="toggleVisibility('savingsDebtContainer')">Savings/Debt Repayment (<?= number_format(($SavingsDebtRepayment/$Total) * 100, 2) ?>%): $<?= number_format($SavingsDebtRepaymentTotal, 2) ?>/$<?= number_format($SavingsDebtRepayment, 2) ?></h3>
         <div class="categoryBudget" id="savingsDebtContainer">
             <div class="categoryItem">
                 <h3>Debt Repayment</h3>

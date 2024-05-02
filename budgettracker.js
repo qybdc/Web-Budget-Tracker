@@ -1,6 +1,5 @@
 window.onload = pageLoad;
 
-// called when page loads; sets up event handlers
 function pageLoad() {
     withinBudget();
 }
