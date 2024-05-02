@@ -8,10 +8,11 @@ function pageLoad() {
 function withinBudget() {
     var totalBudget = document.getElementById("totalBudget");
     var totalSpent = document.getElementById("totalSpent");
+    var container = document.getElementsByClassName("totalContainer")[0];
     if (totalBudget <= totalSpent) {
-        totalSpent.style.backgroundColor = "Lime";
+        container.style.backgroundColor = "Lime";
     } else {
-        totalSpent.style.backgroundColor = "Red";
+        container.style.backgroundColor = "Red";
     }
 
     var categoryItems = document.getElementsByClassName("categoryItem");

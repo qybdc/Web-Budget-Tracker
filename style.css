@@ -76,3 +76,20 @@ form {
     height: auto; 
     aspect-ratio: 1; 
 }
+
+.totalContainer {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    border-radius: 15px;
+    text-align: center;
+    box-sizing: border-box;
+    max-width: 150px;
+    margin: 0 auto;
+}
+
+
+.totalContainer h2 {
+    margin-bottom: 0px;
+    padding: 0;
+}
