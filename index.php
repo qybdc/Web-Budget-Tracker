@@ -270,7 +270,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <option>Food</option>
                 <option>Transportation</option>
                 <option>Healthcare</option>
-                <option>Dept Repayment</option>
+                <option>Debt Repayment</option>
                 <option>Savings</option>
                 <option>Personal</option>
                 <option>Other</option>
