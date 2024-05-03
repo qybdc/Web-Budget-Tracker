@@ -32,12 +32,13 @@ $lastDayOfMonth = date('Y-m-t');
 
 $sql = "SELECT * FROM `budget` WHERE `transDate` BETWEEN '$firstDayOfMonth' AND '$lastDayOfMonth' ORDER BY `transDate`";
 
-
 $stmt = mysqli_prepare($link, $sql);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 
 
+
+// Calculate totals for each category
 $BudgetTotal = $HousingTotal = $UtilitiesTotal = $FoodTotal = $TransTotal = $HealthTotal = $DebtReTotal = $SavingsTotal = $PersonalTotal = $OtherTotal = 0;
 $HousingTotal2 = $UtilitiesTotal2 = $FoodTotal2 = $TransTotal2 = $HealthTotal2 = $DebtReTotal2 = $SavingsTotal2 = $PersonalTotal2 = $OtherTotal2 = 0;
 while ($row = mysqli_fetch_assoc($result)) {
@@ -140,6 +141,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 
 
+// Get input for new transaction
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $query = "INSERT INTO budget (Category, Amount, transDate, Description, Type, paymentMethod) VALUES (?, ?, ?, ?, ?, ?)";
     if ($stmt = mysqli_prepare($link, $query)) {
@@ -158,7 +160,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mysqli_stmt_close($stmt);
     header("Location: index.php");
 }
-
 ?>
 
 
@@ -168,7 +169,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="index.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="budgettracker.js"></script>
     <script src="toggleVisibility.js"></script>
@@ -178,6 +179,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
+    <a href="changeBudget.php" class="change-budget-btn">Change Budget</a>
     <h1>Budget Tracker: <?php echo date('F'); ?></h1>
     <div class="totalContainer">
         <h2>Total Budget</h2>

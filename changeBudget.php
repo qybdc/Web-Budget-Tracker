@@ -53,14 +53,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="changeBudget.css">
     <script src="changeBudget.js"></script>
     <title>Update Budget Amounts</title>
 </head>
+
 <body>
+    <a href="index.php" class="view-budget-btn">View Budget</a>
     <h1>Update Budget Amounts</h1>
     <h2>Recommended Distribution: 50/30/20</h2>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
@@ -97,4 +100,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="submit" value="Update Budget">
     </form>
 </body>
+
 </html>

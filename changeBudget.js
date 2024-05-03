@@ -5,6 +5,7 @@ function pageLoad() {
     for (var i = 0; i < inputs.length; i++) {
         inputs[i].oninput = calculateTotalAndPercentages;
     }
+    calculateTotalAndPercentages();
 }
 
 function calculateTotalAndPercentages() {
