@@ -5,12 +5,12 @@ function pageLoad() {
     for (var i = 0; i < inputs.length; i++) {
         inputs[i].oninput = calculateTotalAndPercentages;
     }
-    calculateTotalAndPercentages();
 }
 
 function calculateTotalAndPercentages() {
     var housing = parseFloat(document.getElementById("housing").value) || 0;
     var utilities = parseFloat(document.getElementById("utilities").value) || 0;
+    var food = parseFloat(document.getElementById("food").value) || 0;
     var transportation = parseFloat(document.getElementById("transportation").value) || 0;
     var healthcare = parseFloat(document.getElementById("healthcare").value) || 0;
     var personal = parseFloat(document.getElementById("personal").value) || 0;
@@ -18,10 +18,10 @@ function calculateTotalAndPercentages() {
     var debtrepay = parseFloat(document.getElementById("debtrepay").value) || 0;
     var savings = parseFloat(document.getElementById("savings").value) || 0;
 
-    var total = housing + utilities + transportation + healthcare + personal + other + debtrepay + savings;
+    var total = housing + utilities + food + transportation + healthcare + personal + other + debtrepay + savings;
     document.getElementById("total").innerHTML = "Total: $" + total.toFixed(2);
 
-    var needs = housing + utilities + transportation + healthcare;
+    var needs = housing + utilities + food +  transportation + healthcare;
     var wants = personal + other;
     var savingsDebt = debtrepay + savings;
 

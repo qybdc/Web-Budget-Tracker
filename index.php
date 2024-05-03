@@ -171,6 +171,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="budgettracker.js"></script>
+    <script src="toggleVisibility.js"></script>
+    <script src="pieChart.js"></script>
     <title>Budget Tracker</title>
 
 </head>
@@ -339,78 +341,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <script>
-        var ctx = document.getElementById('spendingChart').getContext('2d');
-        var spendingChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['Housing', 'Utilities', 'Food', 'Transportation', 'Healthcare', 'Debt Repayment', 'Savings', 'Personal', 'Other'],
-                datasets: [{
-                    label: 'Spending by Category',
-                    data: [
-                        <?= $HousingTotal2 ?>,
-                        <?= $UtilitiesTotal2 ?>,
-                        <?= $FoodTotal ?>,
-                        <?= $TransTotal ?>,
-                        <?= $HealthTotal2 ?>,
-                        <?= $DebtReTotal2 ?>,
-                        <?= $SavingsTotal2 ?>,
-                        <?= $PersonalTotal2 ?>,
-                        <?= $OtherTotal2 ?>
-                    ],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                        'rgba(199, 199, 199, 0.2)',
-                        'rgba(83, 102, 255, 0.2)',
-                        'rgba(40, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)',
-                        'rgba(199, 199, 199, 1)',
-                        'rgba(83, 102, 255, 1)',
-                        'rgba(40, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                }
-            }
-        });
-    </script>
-
-    <script>
-        function toggleVisibility(containerId) {
-            var container = document.getElementById(containerId);
-            if (container.style.display === 'none' || container.style.display === '') {
-                container.style.display = 'flex';
-                container.style.flexDirection = 'row';
-            } else {
-                container.style.display = 'none';
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", function() {
-            var containers = document.querySelectorAll('.categoryBudget');
-            containers.forEach(function(container) {
-                container.style.display = 'none';
-            });
-        });
-    </script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var data = [
+            <?= $HousingTotal2 ?>,
+            <?= $UtilitiesTotal2 ?>,
+            <?= $FoodTotal ?>,
+            <?= $TransTotal ?>,
+            <?= $HealthTotal2 ?>,
+            <?= $DebtReTotal2 ?>,
+            <?= $SavingsTotal2 ?>,
+            <?= $PersonalTotal2 ?>,
+            <?= $OtherTotal2 ?>
+        ];
+        setupPieChart(data);
+    });
+</script>
 
 </body>
 

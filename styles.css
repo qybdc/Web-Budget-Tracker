@@ -1,0 +1,56 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1, h2{
+    text-align: center;
+}
+.flex-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.card {
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    padding: 20px;
+    flex-basis: 28%;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+.card h3 {
+    color: #333;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
+
+input[type="number"] {
+    width: 80%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
